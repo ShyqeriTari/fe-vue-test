@@ -12,8 +12,9 @@
   </div>
 </div>
 
-<div class="d-flex">
-<div v-for="club in clubs" :key="club._id"  class="card ms-4" style="width: 12rem;">
+
+  <div class="row">
+<div v-for="club in clubs" :key="club._id"  class="card col-4 ms-3 mb-3" style="width: 12rem;">
 <div class="image-container mb-3" style="height: 250px;">
   <img class="card-img-top" :src="club.image" alt="Card image cap">
   </div>
