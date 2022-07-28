@@ -3,7 +3,7 @@
   <div class="d-flex flex-column">
     <h3 class="mt-3 text-primary">Sign In</h3>
     <input type="text" placeholder="Insert email..." ref="user_email" required class="w-70 m-auto mt-2">
-    <input type="text" placeholder="Insert password..." ref="user_password" required class="w-70 m-auto mt-2">
+    <input type="password" placeholder="Insert password..." ref="user_password" required class="w-70 m-auto mt-2">
     <button class="mt-3 mb-2 m-auto border-container bg-primary text-white" @click="submit">Submit</button>
     <span class="mb-3">Not registered? <router-link to="/SignUp">SignUp here</router-link></span>
   </div>
@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import {useRouter} from "vue-router";
 export default{
   name: "SignIn",
   data() {
@@ -40,13 +39,14 @@ export default{
         });
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
+          alert("Wrong email or password")
           throw new Error(message);
         }
         const data = await res.json();
         console.log(data)
-        localStorage.setItem("token", data.token)
-        const router = useRouter()
-        router.push('/Home')
+          localStorage.setItem("token", data.token)
+          if(localStorage.token){
+           this.$router.push('/Home')}
         const result = {
           status: res.status + "-" + res.statusText,
           headers: {

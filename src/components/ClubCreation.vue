@@ -1,18 +1,18 @@
 <template>
+<div class="border-container2 ms-auto text-center p-2 mt-2 me-2 pointer bg-primary text-white pointer" @click="this.$router.push('/Home')">Back home</div>
 <div class="m-auto text-center border-container mt-5">
   <div class="d-flex flex-column">
-    <h3 class="mt-3 text-primary">Sign Up</h3>
-     <input type="text" placeholder="Insert email..." ref="user_email" required class="w-70 m-auto mt-2">
-    <input type="password" placeholder="Insert password..." ref="user_password" required class="w-70 m-auto mt-2">
+    <h3 class="mt-3 text-primary">Create club</h3>
+    <input type="text" placeholder="Insert name..." ref="user_name" required class="w-70 m-auto mt-2">
+    <input type="text" placeholder="Insert image url..." ref="user_image" required class="w-70 m-auto mt-2">
     <button class="mt-3 mb-2 m-auto border-container bg-primary text-white" @click="submit">Submit</button>
-    <span class="mb-3">Already registered? <router-link to="/" >SignIn here</router-link></span>
   </div>
   </div>
 </template>
 
 <script>
 export default{
-  name: "SignUp",
+  name: "ClubCreation",
   data() {
     return {
       
@@ -24,14 +24,15 @@ export default{
     },
     async submit() {
       const postData = {
-        email: this.$refs.user_email.value,
-        password: this.$refs.user_password.value,
+        name: this.$refs.user_name.value,
+        image: this.$refs.user_image.value,
       };
       try {
-        const res = await fetch(`http://localhost:3001/auth/register`, {
+        const res = await fetch(`http://localhost:3001/auth/createClub`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",
+           'Authorization': `Bearer ${localStorage.token}`,
             
           },
           body: JSON.stringify(postData),
@@ -39,13 +40,12 @@ export default{
         });
         if (!res.ok) {
           const message = `An error has occured: ${res.status} - ${res.statusText}`;
-           alert("Wrong email or password")
+          alert("Wrong name or image url")
           throw new Error(message);
         }
         const data = await res.json();
         console.log(data)
-        localStorage.setItem("token", data.token)
-        if(localStorage.token){
+          if(res.ok){
            this.$router.push('/Home')}
         const result = {
           status: res.status + "-" + res.statusText,
@@ -78,5 +78,14 @@ export default{
 
 a{
   text-decoration: none
+}
+
+.border-container2{
+  border: 1px solid blue;
+  border-radius: 15px;
+  width: 100px;
+}
+.pointer{
+  cursor: pointer;
 }
 </style>
