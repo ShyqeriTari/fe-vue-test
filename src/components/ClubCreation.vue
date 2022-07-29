@@ -28,7 +28,7 @@ export default{
         image: this.$refs.user_image.value,
       };
       try {
-        const res = await fetch(`http://localhost:3001/auth/createClub`, {
+        const res = await fetch(`${process.env.VUE_APP_BE_URL}/auth/createClub`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",

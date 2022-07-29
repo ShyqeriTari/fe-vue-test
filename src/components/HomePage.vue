@@ -45,7 +45,7 @@ export default {
   },
   async getData(){
      try {
-        const res = await fetch(`http://localhost:3001/auth/getClubs`, {
+        const res = await fetch(`${process.env.VUE_APP_BE_URL}/auth/getClubs`, {
           method: "get",
           headers: {
             'Authorization': `Bearer ${localStorage.token}`,

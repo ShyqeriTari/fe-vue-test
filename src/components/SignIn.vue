@@ -28,7 +28,7 @@ export default{
         password: this.$refs.user_password.value,
       };
       try {
-        const res = await fetch(`http://localhost:3001/auth/login`, {
+        const res = await fetch(`${process.env.VUE_APP_BE_URL}/auth/login`, {
           method: "post",
           headers: {
             "Content-Type": "application/json",
